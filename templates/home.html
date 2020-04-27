@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Clinic</title>
+</head>
+<body>
+{% extends "template.html" %}
+{% block content %}
+<h1 align="center"> Health Clinic Database </h1>
+<div class="text-center w3-padding-16">
+    <div class="btn-group-vertical" style="width:50%;">
+        <a type="button" class="btn btn-lg btn-default" href="patient">Patient</a>
+        <a type="button" class="btn btn-lg btn-default" href="doctor">Doctor</a>
+        <a type="button" class="btn btn-lg btn-default" href="examination">Examination</a>
+        <a type="button" class="btn btn-lg btn-default" href="prescription">Prescription</a>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

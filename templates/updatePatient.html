@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Patient</title>
+    <style>
+input[type=submit] {
+  width: 15%;
+  background-color: #53A4DE;
+  color: white;
+  padding: 5px;
+  margin: 4px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #3A77A3;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+    </style>
+</head>
+
+<body>
+{% extends "template.html" %}
+{% block content %}
+<h1 align="center"> Update Patient</h1>
+<p align="center">Please input the patient ID and the information you would like to update.</p><br>
+<table align="center" style="width:75%;">
+    <tr>
+        <th style="text-align: center; padding:2px;">Patient ID*</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+    <tr>
+        <th style="text-align: center; padding:2px;">First Name</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+    <tr>
+        <th style="text-align: center; padding:2px;">Middle Initial</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+    <tr>
+        <th style="text-align: center; padding:2px;">Last Name</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+    <tr>
+        <th style="text-align: center; padding:2px;">Phone Number</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+    <tr>
+        <th style="text-align: center; padding:2px;">Address</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+    <tr>
+        <th style="text-align: center; padding:2px;">Email</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+    <tr>
+        <th style="text-align: center; padding:2px;">Insurance Name</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+    <tr>
+        <th style="text-align: center; padding:2px;">Insurance ID</th>
+        <td><input type="text" style="width:100%"></td>
+    </tr>
+</table>
+<br>
+<div class="form-group" align="center" style="width: 100%;border-radius:5px;padding: 20px;">
+    <input type="submit" value="Submit">
+</div>
+<p style="padding-left:20px;">* = required fields</p>
+<div align="center" style="padding-top:150px;">
+    <a type="button" class="btn btn-default" href="patient">Return to Patient</a>
+</div>
+{% endblock %}
+</body>
+</html>

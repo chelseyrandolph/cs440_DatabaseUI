@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examination</title>
+</head>
+<body>
+{% extends "template.html" %}
+{% block content %}
+<h1 align="center"> Examination Database</h1>
+<p align="center"> Please select an option below: </p>
+<div class="text-center w3-padding-16">
+    <div class="btn-group-vertical" style="width:50%;">
+        <a type="button" class="btn btn-lg btn-default" href="searchExam">Search for Exam</a>
+        <a type="button" class="btn btn-lg btn-default" href="filterExams">Filter Exams</a>
+        <a type="button" class="btn btn-lg btn-default" href="createExam">Create New Exam</a>
+        <a type="button" class="btn btn-lg btn-default" href="updateExam">Update Exam</a>
+        <a type="button" class="btn btn-lg btn-default" href="deleteExam">Delete Exam</a>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

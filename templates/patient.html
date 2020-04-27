@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient</title>
+</head>
+<body>
+{% extends "template.html" %}
+{% block content %}
+<h1 align="center"> Patient Database</h1>
+<p align="center"> Please select an option below: </p>
+<div class="text-center w3-padding-16">
+    <div class="btn-group-vertical" style="width:50%;">
+        <a type="button" class="btn btn-lg btn-default" href="searchPatient">Search for Patient</a>
+        <a type="button" class="btn btn-lg btn-default" href="addPatient">Add New Patient</a>
+        <a type="button" class="btn btn-lg btn-default" href="updatePatient">Update Patient</a>
+        <a type="button" class="btn btn-lg btn-default" href="deletePatient">Delete Patient</a>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

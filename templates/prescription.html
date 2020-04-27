@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prescription</title>
+</head>
+<body>
+{% extends "template.html" %}
+{% block content %}
+<h1 align="center"> Prescription Database</h1>
+<p align="center"> Please select an option below: </p>
+<div class="text-center w3-padding-16">
+    <div class="btn-group-vertical" style="width:50%;">
+        <a type="button" class="btn btn-lg btn-default" href="searchPrescription">Search for Prescription</a>
+        <a type="button" class="btn btn-lg btn-default" href="addPrescription">Add New Prescription</a>
+        <a type="button" class="btn btn-lg btn-default" href="updatePrescription">Update Prescription</a>
+        <a type="button" class="btn btn-lg btn-default" href="filterPrescriptions">Filter Prescriptions</a>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
