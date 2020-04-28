@@ -1,4 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from searchPatient import *
+from addNewPatient import *
+from database import printTable
+
+# global database = "C:\sqlite\440.db"
 
 app = Flask(__name__)
 
@@ -18,14 +23,54 @@ def patient():
     return render_template("patient.html")
 
 
-@app.route("/searchPatient")
+@app.route("/searchPatient", methods=['GET', 'POST'])
 def searchPatient():
-    return render_template("searchPatient.html")
+    if request.method == "POST":
+        firstName = request.form["first"]
+        middleInitial = request.form["middle"]
+        lastName = request.form["last"]
+        patientID = request.form["patientID"]
+        text = getPatient(firstName, middleInitial, lastName, patientID)
+        if text == '':
+            text = 'ERROR: Patient not found.'
+            return render_template("searchPatient.html", message=text)
+        else:
+            if 'ERROR' in text:
+                text = 'ERROR: Patient not found.'
+                return render_template("searchPatient.html", message=text)
+            else:
+                header = ['Patient ID', 'First Name', 'Middle Initial', 'Last Name', 'Phone Number', 'Address', 'Email',
+                          'Insurance Name', 'Insurance ID']
+                table = printTable(text, header)
+                return render_template("searchPatient.html", message=table)
+    else:
+        return render_template("searchPatient.html")
 
 
-@app.route("/addPatient")
+@app.route("/addPatient", methods=['GET', 'POST'])
 def addPatient():
-    return render_template("addPatient.html")
+    if request.method == "POST":
+        firstName = request.form["first"]
+        middleInitial = request.form["middle"]
+        lastName = request.form["last"]
+        phoneNumber = request.form["phone"]
+        address = request.form["address"]
+        email = request.form["email"]
+        insurN = request.form["insurance"]
+        insurID = request.form["insuranceID"]
+        text = addNewPatient(firstName, middleInitial, lastName, phoneNumber, address, email, insurN, insurID)
+        if text == '':
+            text = 'ERROR:  Unable to add patient.'
+            return render_template("addPatient.html", message=text)
+        else:
+            if 'ERROR' in text:
+                return render_template("addPatient.html", message=text)
+            else:
+                text = "Added patient to table: patient"
+                return render_template("addPatient.html", message=text)
+    else:
+        return render_template("addPatient.html")
+
 
 
 @app.route("/updatePatient")

@@ -32,24 +32,38 @@ input[type=submit]:hover {
 
 
 
+
 </style>
 <body>
 {% extends "template.html" %}
 {% block content %}
 <h1 align="center"> Search for Patient</h1>
 <div class="form-group" align="center" style="width: 100%;border-radius:5px;background-color: #f2f2f2;padding: 20px;">
-    <label for="first">First Name: </label>
-    <input type="text" style="width:15%;" class="form-control" id="first">
-    <label for="middle">Middle Initial:</label>
-    <input type="text" style="width:5%;" class="form-control" id="middle">
-    <label for="last">Last Name: </label>
-    <input type="text" style="width:15%;" class="form-control" id="last">
-    <p align="center"> or </p>
-    <label for="patientID">Patient ID:</label>
-    <input type="text" style="width:25%;" class="form-control" id="patientID">
+    <!-- MUST INCLUDE method="POST" to get input once submitted -->
+    <form method="POST">
+        <!-- Label and input text box for each object.-->
+        <label for="first">First Name: </label>
+        <input type="text" style="width:15%;" class="form-control" name="first" id="first">
+        <label for="middle">Middle Initial:</label>
+        <input type="text" style="width:8%;" class="form-control" name="middle" id="middle">
+        <label for="last">Last Name: </label>
+        <input type="text" style="width:15%;" class="form-control" name="last" id="last">
+        <p align="center"> or </p>
+        <label for="patientID">Patient ID:</label>
+        <input type="text" style="width:25%;" class="form-control" name="patientID" id="patientID">
+        <br>
+        <!-- Submit button -->
+        <input type="submit" value="Submit">
+
+    </form>
     <br>
-    <input type="submit" value="Submit">
+    <br>
+    <!-- This allows you to display the result table or message on the webpage. -->
+    {% if message %}
+    <pre>{{ message }}</pre>
+    {% endif %}
 </div>
+<!-- Return button -->
 <div align="center" style="padding-top:150px;">
     <a type="button" class="btn btn-default" href="patient">Return to Patient</a>
 </div>
