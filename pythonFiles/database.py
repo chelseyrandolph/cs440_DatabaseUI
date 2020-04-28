@@ -2,7 +2,7 @@ import sqlite3
 from tabulate import tabulate
 
 
-def create_connection(db_file):
+def create_connection():
     """ create a database connection to the SQLite database
         specified by the db_file
     :param db_file: database file
@@ -12,7 +12,7 @@ def create_connection(db_file):
     """
     conn = None
     try:
-        conn = sqlite3.connect(db_file)
+        conn = sqlite3.connect("../Delta_Health_Clinic.db")
     except sqlite3.Error as e:
         print(e)
     return conn
@@ -21,12 +21,9 @@ def create_connection(db_file):
 """
 This function selects rows from a table based on a query. 
 """
-
-
 def executeQuerySelect(conn, query):
     cur = conn.cursor()
     cur.execute(query)
-    conn.close()
     rows = cur.fetchall()
     return rows
 
@@ -42,7 +39,6 @@ def executeQuery(conn, query, values):
         cur = conn.cursor()
         cur.execute(query, values)
         conn.commit()
-        conn.close()
     except:
         text = "Query Failed."
         return text
@@ -51,7 +47,5 @@ def executeQuery(conn, query, values):
 """
 This function will print a formatted table onto the webpage.
 """
-
-
 def printTable(rows, header):
     return tabulate(rows, headers=header)

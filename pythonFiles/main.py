@@ -1,11 +1,6 @@
-from flask import Flask, render_template, request
-from searchPatient import *
 from addNewPatient import *
 from updatePatientInformation import *
-from database import printTable
 from deletePatient import *
-
-# global database = "C:\sqlite\440.db"
 
 app = Flask(__name__)
 

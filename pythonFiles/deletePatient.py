@@ -1,7 +1,5 @@
-from flask import Flask, request, render_template, redirect, url_for
-from database import *
 from searchPatient import *
-
+from database import *
 app = Flask(__name__)
 """
 I don't know what but you must include a link '/result' (doesn't actually exist).
@@ -11,15 +9,13 @@ ALWAYS INCLUDE methods=['GET','POST'] when retrieving information!!
 
 @app.route('/result', methods=['GET', 'POST'])
 def deleteAPatient(patientID):
-    # connecting to database, REPLACE WITH YOUR PATH
-    conn = create_connection("C:/sqlite/440.db")
+    conn = create_connection()
     if patientID != '':
         try:
-
             patient = []
             patient.append(patientID)
             values = tuple(patient)
-            query = "DELETE FROM patient WHERE PatientID=?"
+            query = "DELETE FROM PATIENT WHERE PatientID=?"
             result = executeQuery(conn, query, values)
             if result == "Query Failed.":
                 text = 'ERROR: Unable to find patient: ' + patientID

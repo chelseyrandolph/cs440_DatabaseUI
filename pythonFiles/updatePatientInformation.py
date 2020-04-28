@@ -1,7 +1,5 @@
-from flask import Flask
-from database import *
 from searchPatient import *
-
+from database import *
 app = Flask(__name__)
 """
 I don't know what but you must include a link '/result' (doesn't actually exist).
@@ -11,8 +9,7 @@ ALWAYS INCLUDE methods=['GET','POST'] when retrieving information!!
 
 @app.route('/result', methods=['GET', 'POST'])
 def updatePatientInformation(patientID, firstName, middleName, lastName, phoneNumber, address, email, insurN, insurID):
-    # connecting to database, REPLACE WITH YOUR PATH
-    conn = create_connection("C:/sqlite/440.db")
+    conn = create_connection()
     list = [firstName, middleName, lastName, phoneNumber, address, email, insurN]
     attributesToUpdate = []
     try:
@@ -49,7 +46,7 @@ def updatePatientInformation(patientID, firstName, middleName, lastName, phoneNu
             attributesToUpdate.append(patient[0])
             attributesToUpdate = tuple(attributesToUpdate)
             try:
-                query = """UPDATE patient SET 
+                query = """UPDATE PATIENT SET 
                 PatientID = ?,
                 FirstName = ?,
                 MiddleInitial = ?,
