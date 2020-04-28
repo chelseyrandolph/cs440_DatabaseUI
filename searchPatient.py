@@ -10,6 +10,7 @@ ALWAYS INCLUDE methods=['GET','POST'] when retrieving information!!
 
 @app.route('/result', methods=['GET', 'POST'])
 def getPatient(firstName, middleName, lastName, patientID):
+    print("INSIDE GET")
     # connecting to database, REPLACE WITH YOUR PATH
     conn = create_connection("C:/sqlite/440.db")
     if firstName != '' and middleName != '' and lastName != '':

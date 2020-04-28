@@ -3,6 +3,7 @@ from searchPatient import *
 from addNewPatient import *
 from updatePatientInformation import *
 from database import printTable
+from deletePatient import *
 
 # global database = "C:\sqlite\440.db"
 
@@ -100,9 +101,18 @@ def updatePatient():
         return render_template("updatePatient.html")
 
 
-@app.route("/deletePatient")
+@app.route("/deletePatient", methods=['GET', 'POST'])
 def deletePatient():
-    return render_template("deletePatient.html")
+    if request.method == "POST":
+        patientID = request.form["paID"]
+        text = deleteAPatient(patientID)
+        if 'ERROR' in text:
+            return render_template("deletePatient.html", message=text)
+        else:
+            text = "Patient " + patientID + " has been deleted from table 'patient.'"
+            return render_template("deletePatient.html", message=text)
+    else:
+        return render_template("deletePatient.html")
 
 
 @app.route("/doctor")

@@ -30,23 +30,30 @@ input[type=submit]:hover {
   background-color: #3A77A3;
 }
 
+
 </style>
 <body>
 {% extends "template.html" %}
 {% block content %}
 <h1 align="center"> Delete Patient</h1>
-<div class="form-group" align="center" style="width: 100%;border-radius:5px;background-color: #f2f2f2;padding: 20px;">
-    <label for="first">First Name: </label>
-    <input type="text" style="width:15%;" class="form-control" id="first">
-    <label for="middle">Middle Initial:</label>
-    <input type="text" style="width:5%;" class="form-control" id="middle">
-    <label for="last">Last Name: </label>
-    <input type="text" style="width:15%;" class="form-control" id="last">
-    <p align="center"> or </p>
-    <label for="patientID">Patient ID:</label>
-    <input type="text" style="width:25%;" class="form-control" id="patientID">
-    <br>
-    <input type="submit" value="Submit">
+<br>
+<div class="form-group" align="center"
+     style="width:50%;margin:0 auto;border-radius:5px;background-color: #f2f2f2;padding: 20px;">
+    <!-- MUST INCLUDE method="POST" to get input once submitted -->
+    <form method="post">
+        <label for="patientID">Patient ID:</label>
+        <input type="text" style="width:25%;" class="form-control" name="paID" id="patientID">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<br>
+<br>
+<div align="center" style="width: 50%;margin:0 auto;">
+    <!-- This allows you to display the result table or message on the webpage. -->
+    {% if message %}
+    <pre>{{ message }}</pre>
+    {% endif %}
 </div>
 <div align="center" style="padding-top:150px;">
     <a type="button" class="btn btn-default" href="patient">Return to Patient</a>

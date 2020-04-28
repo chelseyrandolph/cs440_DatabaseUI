@@ -26,7 +26,7 @@ This function selects rows from a table based on a query.
 def executeQuerySelect(conn, query):
     cur = conn.cursor()
     cur.execute(query)
-
+    conn.close()
     rows = cur.fetchall()
     return rows
 
@@ -42,6 +42,7 @@ def executeQuery(conn, query, values):
         cur = conn.cursor()
         cur.execute(query, values)
         conn.commit()
+        conn.close()
     except:
         text = "Query Failed."
         return text
