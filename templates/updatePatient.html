@@ -19,11 +19,12 @@ input[type=submit]:hover {
   background-color: #3A77A3;
 }
 
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
+input[type=text]{
+    font-size: 15px;
 }
-
+legend,fieldset{
+    font-size: 10px;
+}
     </style>
 </head>
 
@@ -32,50 +33,45 @@ table, th, td {
 {% block content %}
 <h1 align="center"> Update Patient</h1>
 <p align="center">Please input the patient ID and the information you would like to update.</p><br>
-<table align="center" style="width:75%;">
-    <tr>
-        <th style="text-align: center; padding:2px;">Patient ID*</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-    <tr>
-        <th style="text-align: center; padding:2px;">First Name</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-    <tr>
-        <th style="text-align: center; padding:2px;">Middle Initial</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-    <tr>
-        <th style="text-align: center; padding:2px;">Last Name</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-    <tr>
-        <th style="text-align: center; padding:2px;">Phone Number</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-    <tr>
-        <th style="text-align: center; padding:2px;">Address</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-    <tr>
-        <th style="text-align: center; padding:2px;">Email</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-    <tr>
-        <th style="text-align: center; padding:2px;">Insurance Name</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-    <tr>
-        <th style="text-align: center; padding:2px;">Insurance ID</th>
-        <td><input type="text" style="width:100%"></td>
-    </tr>
-</table>
-<br>
-<div class="form-group" align="center" style="width: 100%;border-radius:5px;padding: 20px;">
-    <input type="submit" value="Submit">
+<div class="form-group" align="center"
+     style="width: 50%;margin:0 auto;border-radius:5px;background-color: #f2f2f2;padding: 20px;">
+    <!-- MUST INCLUDE method="POST" to get input once submitted -->
+    <form method="post" style="width=50%">
+        <fieldset>
+            <h5 align="center"><b>Patient ID*</b></h5>
+            <input type="text" name="pID" style="width:50%">
+            <h5 align="center"><b>First Name</b></h5>
+            <input type="text" name="fname" style="width:50%">
+            <h5 align="center"><b>Middle Initial</b></h5>
+            <input type="text" name="minit" style="width:50%">
+            <h5 align="center"><b>Last Name</b></h5>
+            <input type="text" name="lname" style="width:50%">
+            <h5 align="center"><b>Phone Number</b></h5>
+            <input type="text" name="pnum" style="width:50%">
+            <h5 align="center"><b>Address</b></h5>
+            <input type="text" name="addr" style="width:50%">
+            <h5 align="center"><b>Email</b></h5>
+            <input type="text" name="email" style="width:50%">
+            <h5 align="center"><b>Insurancce Name</b></h5>
+            <input type="text" name="insurN" style="width:50%">
+            <h5 align="center"><b>Insurancce ID</b></h5>
+            <input type="text" name="insurID" style="width:50%">
+        </fieldset>
+        <input formmethod="post" type="submit" value="Submit">
+    </form>
+
 </div>
+<br><br>
+<div align="center" style="width: 50%;margin:0 auto;">
+    <!-- This allows you to display the result table or message on the webpage. -->
+    {% if message %}
+    <pre>{{ message }}</pre>
+    {% endif %}
+</div>
+
+<br>
 <p style="padding-left:20px;">* = required fields</p>
-<div align="center" style="padding-top:150px;">
+<div align="center" style="padding-top:100px;">
     <a type="button" class="btn btn-default" href="patient">Return to Patient</a>
 </div>
 {% endblock %}

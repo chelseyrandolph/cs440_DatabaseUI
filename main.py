@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from searchPatient import *
 from addNewPatient import *
+from updatePatientInformation import *
 from database import printTable
 
 # global database = "C:\sqlite\440.db"
@@ -72,10 +73,31 @@ def addPatient():
         return render_template("addPatient.html")
 
 
-
-@app.route("/updatePatient")
+@app.route("/updatePatient", methods=['GET', 'POST'])
 def updatePatient():
-    return render_template("updatePatient.html")
+    if request.method == "POST":
+        patientID = request.form["pID"]
+        firstName = request.form["fname"]
+        middleInitial = request.form["minit"]
+        lastName = request.form["lname"]
+        phoneNumber = request.form["pnum"]
+        address = request.form["addr"]
+        email = request.form["email"]
+        insurN = request.form["insurN"]
+        insurID = request.form["insurID"]
+        text = updatePatientInformation(patientID, firstName, middleInitial, lastName, phoneNumber, address, email,
+                                        insurN, insurID)
+        if text == '':
+            text = 'ERROR:  Unable to update patient.'
+            return render_template("updatePatient.html", message=text)
+        else:
+            if 'ERROR' in text:
+                return render_template("updatePatient.html", message=text)
+            else:
+                text = "Updated patient information for patient: " + patientID
+                return render_template("updatePatient.html", message=text)
+    else:
+        return render_template("updatePatient.html")
 
 
 @app.route("/deletePatient")
