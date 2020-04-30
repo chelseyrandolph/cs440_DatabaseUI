@@ -23,7 +23,8 @@ and opendir), and leave all pathname manipulation to os.path
 
 # '
 
-import sys, errno
+import errno
+import sys
 
 _names = sys.builtin_module_names
 
