@@ -9,6 +9,7 @@ from filterByTitle import *
 from deleteDoctor import *
 from addNewPrescription import *
 from searchPrescription import *
+from updatePrescriptionInformation import *
 app = Flask(__name__)
 
 
@@ -309,9 +310,25 @@ def addPrescription():
         return render_template("addPrescription.html")
 
 
-@app.route("/updatePrescription")
+@app.route("/updatePrescription", methods=['GET', 'POST'])
 def updatePrescription():
-    return render_template("updatePrescription.html")
+    if request.method == "POST":
+        doctorID = request.form["doctorID"]
+        patientID = request.form["patientID"]
+        medication = request.form["medication"]
+        instructions = request.form["instructions"]
+        text = updatePrescriptionInformation(doctorID, patientID, medication, instructions)
+        if text == '':
+            text = 'ERROR:  Unable to update prescription.'
+            return render_template("updatePrescription.html", message=text)
+        else:
+            if 'ERROR' in text:
+                return render_template("updatePrescription.html", message=text)
+            else:
+                text = "Updated prescription information"
+                return render_template("updatePrescription.html", message=text)
+    else:
+        return render_template("updatePrescription.html")
 
 
 @app.route("/filterPrescriptions")
