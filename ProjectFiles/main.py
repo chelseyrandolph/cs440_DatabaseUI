@@ -7,6 +7,8 @@ from updatePatientInformation import *
 from updateDoctorInformation import *
 from filterByTitle import *
 from deleteDoctor import *
+from addNewPrescription import *
+from searchPrescription import *
 app = Flask(__name__)
 
 
@@ -265,14 +267,46 @@ def prescription():
     return render_template("prescription.html")
 
 
-@app.route("/searchPrescription")
+@app.route("/searchPrescription", methods=['GET', 'POST'])
 def searchPrescription():
-    return render_template("searchPrescription.html")
+    if request.method == "POST":
+        doctorID = request.form["doctorID"]
+        patientID = request.form["patientID"]
+        medication = request.form["medication"]
+        text = getPrescription(doctorID, patientID, medication)
+        if text == '':
+            text = 'ERROR: Prescription not found.'
+            return render_template("searchPrescription.html", message=text)
+        else:
+            if 'ERROR' in text:
+                text = 'ERROR: Prescription not found.'
+                return render_template("searchPrescription.html", message=text)
+            else:
+                header = ['Doctor ID', 'Patient ID', 'Medication', 'Instructions']
+                table = printTable(text, header)
+                return render_template("searchPrescription.html", message=table)
+    else:
+        return render_template("searchPrescription.html")
 
 
-@app.route("/addPrescription")
+@app.route("/addPrescription", methods=['GET', 'POST'])
 def addPrescription():
-    return render_template("addPrescription.html")
+    if request.method == "POST":
+        doctorId = request.form["doctorID"]
+        patientId = request.form["patientID"]
+        medication = request.form["medication"]
+        instructions = request.form["instructions"]
+        text = addNewPrescription(doctorId, patientId, medication, instructions)
+        if text == '':
+            text = 'ERROR:  Unable to add prescription.'
+            return render_template("addPrescription.html", message=text)
+        else:
+            if 'ERROR' in text:
+                return render_template("addPrescription.html", message=text)
+            else:
+                return render_template("addPrescription.html", message=text)
+    else:
+        return render_template("addPrescription.html")
 
 
 @app.route("/updatePrescription")
