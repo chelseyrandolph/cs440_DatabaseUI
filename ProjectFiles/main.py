@@ -1,12 +1,19 @@
-from addNewDoctor import *
 from addNewPatient import *
+from addNewDoctor import *
+from createNewExamination import *
 from deletePatient import *
-from searchDoctor import *
-from flask import Flask, render_template, request
+from deleteDoctor import *
+from deleteExamination import *
 from updatePatientInformation import *
 from updateDoctorInformation import *
+from updateExaminationInformation import *
+from searchPatient import *
+from searchDoctor import *
+from searchExamination import *
 from filterByTitle import *
-from deleteDoctor import *
+from filterByExamination import *
+from datetime import datetime
+from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
@@ -235,30 +242,98 @@ def examination():
     return render_template("examination.html")
 
 
-@app.route("/searchExam")
+@app.route("/searchExam", methods=['GET', 'POST'])
 def searchExam():
-    return render_template("searchExam.html")
+    if request.method == "POST":
+        examID = request.form["examID"]
+        patientID = request.form["patientID"]
+        text = getExamination(examID, patientID)
+        if text == '':
+            text = 'ERROR: Examination not found.'
+            return render_template("searchExam.html", message=text)
+        else:
+            if 'ERROR' in text:
+                text = 'ERROR: Examination not found.'
+                return render_template("searchExam.html", message=text)
+            else:
+                header = ['Exam ID', 'Date', 'Time', 'Allergies', 'Medications', 'Height', 'Weight', 'Doctor', 'Attendee']
+                table = printTable(text, header)
+                return render_template("searchExam.html", message=table)
+    else:
+        return render_template("searchExam.html")
 
-
-@app.route("/createExam")
+@app.route("/createExam", methods=['GET', 'POST'])
 def createExam():
-    return render_template("createExam.html")
-
+    if request.method == "POST":
+        doctor = request.form["doctor"]
+        attendee = request.form["patient"]
+        date = request.form["date"]
+        time = request.form["time"]
+        height = request.form["height"]
+        weight = request.form["weight"]
+        allergies = request.form["allergies"]
+        medications = request.form["medications"]
+        text = createNewExamination(date, time, allergies, medications, height, weight, doctor, attendee)
+        if text == '':
+            text = 'ERROR:  Unable to create examination.'
+            return render_template("createExam.html", message=text)
+        else:
+            if 'ERROR' in text:
+                return render_template("createExam.html", message=text)
+            else:
+                return render_template("createExam.html", message=text)
+    else:
+        return render_template("createExam.html")
 
 @app.route("/updateExam")
 def updateExam():
     return render_template("updateExam.html")
 
 
-@app.route("/filterExams")
+@app.route("/filterExams", methods=['GET', 'POST'])
 def filterExam():
-    return render_template("filterExams.html")
+    if request.method == "POST":
+        list = ['doctor', 'attendee', 'date', 'time']
+        filterList = []
+        valueList = []
+        for item in list:
+            r = request.form[item]
+            if not r:
+                continue
+            else:
+                filterList.append(item)
+                if item == 'date':
+                    valueList.append('\'' + datetime.strftime(datetime.strptime(r, '%m-%d-%Y'), '%m-%d-%Y') + '\'')
+                elif item == 'time':
+                    valueList.append('\'' + datetime.strftime(datetime.strptime(r, '%H:%M'), '%H:%M') + '\'')
+                else:
+                    valueList.append(r)
+        text = filterByExamination(filterList, valueList)
+        if text == '':
+            text = 'ERROR: Examination not found.'
+            return render_template("filterExams.html", message=text)
+        else:
+            if 'ERROR' in text:
+                return render_template("filterExams.html", message=text)
+            else:
+                header = ['Exam ID', 'Date', 'Time', 'Allergies', 'Medications', 'Height', 'Weight', 'Doctor', 'Attendee']
+                table = printTable(text, header)
+                return render_template("filterExams.html", message=table)
+    else:
+        return render_template("filterExams.html")
 
-
-@app.route("/deleteExam")
+@app.route("/deleteExam", methods=['GET', 'POST'])
 def deleteExam():
-    return render_template("deleteExam.html")
-
+    if request.method == "POST":
+        examID = request.form["examID"]
+        text = deleteExamination(examID)
+        if 'ERROR' in text:
+            return render_template("deleteExam.html", message=text)
+        else:
+            text = "Examination " + examID + " has been deleted from table 'EXAMINATION.'"
+            return render_template("deleteExam.html", message=text)
+    else:
+        return render_template("deleteExam.html")
 
 @app.route("/prescription")
 def prescription():

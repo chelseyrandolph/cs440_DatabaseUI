@@ -30,13 +30,13 @@ def addNewDoctor(firstName, middleName, lastName, phoneNumber, email, title):
                 result = executeQuery(conn, query, values)
                 # If the query fails it prints an error
                 if result == "Query Failed.":
-                    text = 'ERROR: Unable to add doctor.'
+                    text = 'ERROR: Unable to add Doctor.'
                 else:
-                    text = "Added doctor to table: doctor"
+                    text = "Added doctor to table: Doctor"
             # If the query fails it prints an error
             except:
-                text = 'ERROR: Unable to add doctor.'
+                text = 'ERROR: Unable to add Doctor.'
         # If the fields aren't filled
         else:
-            text = 'ERROR: Missing Information. Please fill all boxes.'
+            text = 'ERROR: Missing Information. Please fill out all boxes.'
         return text
