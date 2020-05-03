@@ -1,15 +1,18 @@
 from addNewPatient import *
 from addNewDoctor import *
 from createNewExamination import *
+from addNewPrescription import *
 from deletePatient import *
 from deleteDoctor import *
 from deleteExamination import *
 from updatePatientInformation import *
 from updateDoctorInformation import *
 from updateExaminationInformation import *
+from updatePrescriptionInformation import *
 from searchPatient import *
 from searchDoctor import *
 from searchExamination import *
+from searchPrescription import *
 from filterByTitle import *
 from filterByExamination import *
 from datetime import datetime
@@ -340,24 +343,67 @@ def prescription():
     return render_template("prescription.html")
 
 
-@app.route("/searchPrescription")
+@app.route("/searchPrescription", methods=['GET', 'POST'])
 def searchPrescription():
-    return render_template("searchPrescription.html")
+    if request.method == "POST":
+        doctorID = request.form["doctorID"]
+        patientID = request.form["patientID"]
+        medication = request.form["medication"]
+        text = getPrescription(doctorID, patientID, medication)
+        if text == '':
+            text = 'ERROR: Prescription not found.'
+            return render_template("searchPrescription.html", message=text)
+        else:
+            if 'ERROR' in text:
+                text = 'ERROR: Prescription not found.'
+                return render_template("searchPrescription.html", message=text)
+            else:
+                header = ['Doctor ID', 'Patient ID', 'Medication', 'Instructions']
+                table = printTable(text, header)
+                return render_template("searchPrescription.html", message=table)
+    else:
+        return render_template("searchPrescription.html")
 
 
-@app.route("/addPrescription")
+@app.route("/addPrescription", methods=['GET', 'POST'])
 def addPrescription():
-    return render_template("addPrescription.html")
+    if request.method == "POST":
+        doctorId = request.form["doctorID"]
+        patientId = request.form["patientID"]
+        medication = request.form["medication"]
+        instructions = request.form["instructions"]
+        text = addNewPrescription(doctorId, patientId, medication, instructions)
+        if text == '':
+            text = 'ERROR:  Unable to add prescription.'
+            return render_template("addPrescription.html", message=text)
+        else:
+            if 'ERROR' in text:
+                return render_template("addPrescription.html", message=text)
+            else:
+                return render_template("addPrescription.html", message=text)
+    else:
+        return render_template("addPrescription.html")
 
 
-@app.route("/updatePrescription")
+@app.route("/updatePrescription", methods=['GET', 'POST'])
 def updatePrescription():
-    return render_template("updatePrescription.html")
-
-
-@app.route("/filterPrescriptions")
-def filterPrescriptions():
-    return render_template("filterPrescriptions.html")
+    if request.method == "POST":
+        doctorID = request.form["doctorID"]
+        patientID = request.form["patientID"]
+        medication = request.form["medication"]
+        instructions = request.form["instructions"]
+        text = updatePrescriptionInformation(doctorID, patientID, medication, instructions)
+        if text == '':
+            text = 'ERROR:  Unable to update prescription.'
+            return render_template("updatePrescription.html", message=text)
+        else:
+            if 'ERROR' in text:
+                return render_template("updatePrescription.html", message=text)
+            else:
+                text = "Updated prescription information"
+                return render_template("updatePrescription.html", message=text)
+    else:
+        return render_template("updatePrescription.html")
 
 
 if __name__ == "__main__":
