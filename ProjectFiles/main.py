@@ -10,7 +10,6 @@ from deleteDoctor import *
 from addNewPrescription import *
 from searchPrescription import *
 from updatePrescriptionInformation import *
-from filterPrescriptions import *
 app = Flask(__name__)
 
 
@@ -330,29 +329,6 @@ def updatePrescription():
                 return render_template("updatePrescription.html", message=text)
     else:
         return render_template("updatePrescription.html")
-
-
-@app.route("/filterPrescriptions", methods=['GET', 'POST'])
-def filterPrescriptions():
-    if request.method == "POST":
-        doctorID = request.form["doctor"]
-        patientID = request.form["patient"]
-        medication = request.form["medication"]
-        text = filterPrescription(doctorID, patientID, medication)
-        if text == '':
-            text = 'ERROR: Prescription not found.'
-            return render_template("filterPrescriptions.html", message=text)
-        else:
-            if 'ERROR' in text:
-                text = 'ERROR: Prescription not found.'
-                return render_template("filterPrescriptions.html", message=text)
-            else:
-                header = ['Doctor ID', 'Patient ID', 'Medication', 'Instructions']
-                table = printTable(text, header)
-                return render_template("filterPrescriptions.html", message=table)
-    else:
-        return render_template("filterPrescriptions.html")
-
 
 if __name__ == "__main__":
     app.run(debug=True)
