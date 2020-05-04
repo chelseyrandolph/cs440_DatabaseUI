@@ -3,6 +3,7 @@ from tabulate import tabulate
 
 tabulate.PRESERVE_WHITESPACE = True
 
+
 def create_connection():
     """ create a database connection to the SQLite database
         specified by the db_file
@@ -19,25 +20,16 @@ def create_connection():
     return conn
 
 
-"""
-This function selects rows from a table based on a query. 
-"""
-
-
-def executeQuerySelect(conn, query):
+# This function selects rows from a table based on a query.
+def execute_query_select(conn, query):
     cur = conn.cursor()
     cur.execute(query)
     rows = cur.fetchall()
     return rows
 
 
-"""
-This function will execute a (INSERT INTO, UPDATE, DELETE) query.
-Tested: INSERT INTO, 
-"""
-
-
-def executeQuery(conn, query, values):
+# This function will execute a (INSERT INTO, UPDATE, DELETE) query.
+def execute_query(conn, query, values):
     try:
         cur = conn.cursor()
         cur.execute(query, values)
@@ -47,8 +39,6 @@ def executeQuery(conn, query, values):
         return text
 
 
-"""
-This function will print a formatted table onto the webpage.
-"""
-def printTable(rows, header):
+# This function will print a formatted table onto the webpage.
+def print_table(rows, header):
     return tabulate(rows, header, tablefmt='simple', stralign='right')
