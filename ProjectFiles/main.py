@@ -29,9 +29,10 @@ from update_prescription import *
 
 # General
 from datetime import datetime
+from create_database import *
+from populate_database import *
 from flask import Flask, render_template, request
 app = Flask(__name__)
-
 
 @app.route("/")
 def start():
@@ -462,7 +463,6 @@ def update_prescription():
                 return render_template("update-prescription.html", message=result)
     else:
         return render_template("update-prescription.html")
-
 
 if __name__ == "__main__":
     app.run(debug=True)

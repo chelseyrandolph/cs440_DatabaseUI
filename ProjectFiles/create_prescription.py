@@ -7,7 +7,6 @@ app = Flask(__name__)
 
 @app.route('/result', methods=['GET', 'POST'])
 def create_new_prescription(doctor_id, patient_id, medication, instructions):
-    doctorID = random.randint(1000, 9999)
     conn = create_connection()
     list = [medication, instructions]
     try:

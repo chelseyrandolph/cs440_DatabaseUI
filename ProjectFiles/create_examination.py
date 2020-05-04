@@ -25,7 +25,7 @@ def create_new_examination(date, time, allergies, medications, height, weight, d
                 result = 'ERROR: Invalid input.'
                 return
     except:
-        if date != '' and time != '' and allergies != '' and medications != '' and height != '' and weight != '' \
+        if date != '' and time != '' and height != '' and weight != '' \
                 and doctor_id != '' and patient_id != '':
             try:
                 date = datetime.strftime(datetime.strptime(date, '%m-%d-%Y'), '%m-%d-%Y')
