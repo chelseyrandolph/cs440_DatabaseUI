@@ -29,8 +29,6 @@ from update_prescription import *
 
 # General
 from datetime import datetime
-from create_database import *
-from populate_database import *
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
@@ -138,7 +136,7 @@ def delete_patient():
         if 'ERROR' in text:
             return render_template("delete-patient.html", message=text)
         else:
-            text = "Patient " + patientID + " has been deleted from table PATIENT."
+            text = "Patient " + patient_id + " has been deleted from table PATIENT."
             return render_template("delete-patient.html", message=text)
     else:
         return render_template("delete-patient.html")
