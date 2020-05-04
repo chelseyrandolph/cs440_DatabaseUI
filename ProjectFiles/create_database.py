@@ -47,7 +47,13 @@ def create():
         "Instructions VARCHAR(250) NOT NULL, "
         "FOREIGN KEY (Doctor) REFERENCES Doctor(DoctorID), "
         "FOREIGN KEY (Patient) REFERENCES Patient(PatientID),"
-        "CONSTRAINT p UNIQUE (Doctor,Patient,Medication))"]
+        "CONSTRAINT p UNIQUE (Doctor,Patient,Medication))",
+
+        "CREATE INDEX IF NOT EXISTS idx_pat_name ON Patient (LastName, FirstName)",
+
+        "CREATE INDEX IF NOT EXISTS idx_doc_name ON Doctor (LastName, FirstName)",
+
+        "CREATE INDEX IF NOT EXISTS idx_exam_date_time ON Examination (Date, Time)"]
     try:
         for query in queries:
             c.execute(query)
