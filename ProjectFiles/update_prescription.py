@@ -16,7 +16,7 @@ def update_prescription_entry(doctor_id, patient_id, medication, instructions):
         else:
             no_update_flag = 1
     if no_update_flag == 0:
-        result = 'ERROR: Missing information. Please fill out the field you want to update.'
+        result = 'ERROR: Missing information. Please fill out the field(s) you would like to update.'
         return result
     attributes_to_update = []
     try:

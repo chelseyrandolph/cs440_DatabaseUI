@@ -9,7 +9,7 @@ input[type=submit] {
   background-color: #53A4DE;
   color: white;
   padding: 5px;
-  margin: 4px 0;
+  margin: 12px 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -31,7 +31,7 @@ table, th, td {
 {% extends "template.html" %}
 {% block content %}
 <h1 align="center"> Update Examination</h1>
-<p align="center">Please input the Examination ID and the information you would like to update.</p><br>
+<p align="center">Please input the Examination ID, Doctor ID, Patient ID, and the information you would like to update.</p><br>
 <!-- MUST INCLUDE method="POST" to get input once submitted -->
 <div class="form-group" align="center"
      style="width: 50%;margin:0 auto;border-radius:5px;background-color: #f2f2f2;padding: 20px;">
@@ -51,7 +51,7 @@ table, th, td {
             <input type="text" name="height" style="width:50%">
             <h5 align="center"><b>Weight (lbs)</b></h5>
             <input type="text" name="weight" style="width:50%">
-            <h5 align="center"><b>Doctor*</b></h5>
+            <h5 align="center"><b>Doctor</b></h5>
             <input type="text" name="doctor_id" style="width:50%">
             <h5 align="center"><b>Attendee*</b></h5>
             <input type="text" name="patient_id" style="width:50%">

@@ -8,7 +8,7 @@ app = Flask(__name__)
 def update_patient_entry(patient_id, first_name, middle_initial, last_name, phone_number, address, email, insurance,
                          insurance_id):
     conn = create_connection()
-    list = [first_name, middle_initial, last_name, phone_number, address, email, insurance]
+    list = [first_name, middle_initial, last_name, phone_number, address, email, insurance, insurance_id]
     no_update_flag = 0
     for item in list:
         if not item:

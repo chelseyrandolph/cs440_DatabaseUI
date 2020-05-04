@@ -182,7 +182,7 @@ def search_doctor():
         middle_initial = request.form["middle"]
         last_name = request.form["last"]
         doctor_id = request.form["doctor_id"]
-        result = getDoctor(first_name, middle_initial, last_name, doctor_id)
+        result = get_doctor(first_name, middle_initial, last_name, doctor_id)
         if result == '':
             result = 'ERROR: Doctor not found.'
             return render_template("search-doctor.html", message=result)
@@ -235,7 +235,7 @@ def update_doctor():
         phone_number = request.form["phone"]
         email = request.form["email"]
         title = request.form["title"]
-        result = updateDoctorInformation(doctor_id, first_name, middle_initial, last_name, phone_number, email, title)
+        result = update_doctor_entry(doctor_id, first_name, middle_initial, last_name, phone_number, email, title)
         if result == '':
             result = 'ERROR: Unable to update doctor.'
             return render_template("update-doctor.html", message=result)
@@ -243,7 +243,7 @@ def update_doctor():
             if 'ERROR' in result:
                 return render_template("update-doctor.html", message=result)
             else:
-                result = "Updated patient information for doctor: " + doctor_id
+                result = "Updated information for doctor: " + doctor_id
                 return render_template("update-doctor.html", message=result)
     else:
         return render_template("update-doctor.html")
@@ -284,7 +284,7 @@ def create_examination():
         weight = request.form["weight"]
         allergies = request.form["allergies"]
         medications = request.form["medications"]
-        result = createNewExamination(date, time, allergies, medications, height, weight, doctor_id, patient_id)
+        result = create_new_examination(date, time, allergies, medications, height, weight, doctor_id, patient_id)
         if result == '':
             result = 'ERROR: Unable to create examination.'
             return render_template("create-examination.html", message=result)
@@ -351,9 +351,30 @@ def filter_exam():
         return render_template("filter-examination.html")
 
 
-@app.route("/update-examination")
-def updateExam():
-    return render_template("update-exam.html")
+@app.route("/update-examination", methods=['GET', 'POST'])
+def update_examination():
+    if request.method == "POST":
+        examination_id = request.form["examination_id"]
+        date = request.form["date"]
+        time = request.form["time"]
+        allergies = request.form["allergies"]
+        medications = request.form["medications"]
+        height = request.form["height"]
+        weight = request.form["weight"]
+        doctor_id = request.form["doctor_id"]
+        patient_id = request.form["patient_id"]
+        result = update_examination_entry(examination_id, date, time, allergies, medications, height, weight, doctor_id, patient_id)
+        if result == '':
+            result = 'ERROR: Unable to update examination.'
+            return render_template("update-examination.html", message=result)
+        else:
+            if 'ERROR' in result:
+                return render_template("update-examination.html", message=result)
+            else:
+                result = "Updated information for examination: " + examination_id
+                return render_template("update-examination.html", message=result)
+    else:
+        return render_template("update-examination.html")
 
 
 @app.route("/delete-examination", methods=['GET', 'POST'])

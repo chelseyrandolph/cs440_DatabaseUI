@@ -1,4 +1,5 @@
 from database import *
+from datetime import datetime
 from flask import Flask
 from search_examination import *
 
@@ -6,69 +7,84 @@ app = Flask(__name__)
 
 
 @app.route('/result', methods=['GET', 'POST'])
-def updateExaminationInformation(examID, date, time, allergies, medications, height, weight, doctor, patient):
+def update_examination_entry(examination_id, date, time, allergies, medications, height, weight, doctor_id, patient_id):
     conn = create_connection()
-    list = [firstName, middleName, lastName, phoneNumber, email, title]
-    noUpdateFlag = 0
+    # Sanitized date/time input
+    if date:
+        date = datetime.strftime(datetime.strptime(date, '%m-%d-%Y'), '%m-%d-%Y')
+    if time:
+        time = datetime.strftime(datetime.strptime(time, '%H:%M'), '%H:%M')
+    list = [date, time, allergies, medications, height, weight, doctor_id]
+    no_update_flag = 0
     for item in list:
         if item == '':
             continue
         else:
-            noUpdateFlag = 1
-    if noUpdateFlag == 0:
-        text = 'ERROR: Missing information. Please fill out the field you want to update.'
-        return text
-    attributesToUpdate = []
+            no_update_flag = 1
+    if no_update_flag == 0:
+        result = 'ERROR: Missing information. Please fill out the field(s) you would like to update.'
+        return result
+    attributes_to_update = []
     try:
-        for item in list:
-            if isinstance(int(item), int):
-                text = 'ERROR: Invalid input.'
-                return text
+        for x in range(0, len(list)):
+            if x < 4 and isinstance(int(list[x]), int):
+                result = 'ERROR: Invalid input.'
+                return result
+            elif x >= 4 and not isinstance(int(list[x]), int):
+                result = 'ERROR: Invalid input.'
+                return result
     except:
-        list2 = [doctorID, firstName, middleName, lastName, phoneNumber, email, title]
-        if doctorID == '':
-            text = "ERROR: DoctorID is required."
-            return text
+        list2 = [examination_id, date, time, allergies, medications, height, weight, doctor_id, patient_id]
+        print(list2)
+        if examination_id == '':
+            result = 'ERROR: Examination ID is required.'
+            return result
+        elif patient_id == '':
+            result = 'ERROR: Patient ID is required.'
+            return result
         else:
-            row = getDoctor(firstName, middleName, lastName, doctorID)
+            row = get_examination(examination_id, patient_id)
+            print(row)
             if not row:
-                text = 'ERROR: Unable to update doctor: ' + doctorID
-                return text
+                result = 'ERROR: Unable to update examination: ' + examination_id
+                return result
             else:
-                doctor = row[0]
-            attributesToUpdate.append(doctor[0])
-            for x in range(1, len(doctor)):
-                if doctor[x] != list2[x] and list2[x] != '':
+                examination = row[0]
+            attributes_to_update.append(examination[0])
+            for x in range(1, len(examination)):
+                if examination[x] != list2[x] and list2[x] != '':
                     try:
                         if isinstance(int(list2[x]), int):
-                            attributesToUpdate.append(list2[x])
+                            attributes_to_update.append(list2[x])
                     except:
-                        attributesToUpdate.append(str(list2[x]))
-                elif doctor[x] != list2[x] and list2[x] == '':
+                        attributes_to_update.append(str(list2[x]))
+                elif examination[x] != list2[x] and list2[x] == '':
                     try:
-                        if isinstance(int(doctor[x]), int):
-                            attributesToUpdate.append(doctor[x])
+                        if isinstance(int(examination[x]), int):
+                            attributes_to_update.append(examination[x])
                     except:
-                        attributesToUpdate.append(str(doctor[x]))
-            attributesToUpdate.append(doctor[0])
-            attributesToUpdate = tuple(attributesToUpdate)
+                        attributes_to_update.append(str(examination[x]))
+            attributes_to_update.append(examination[0])
+            attributes_to_update = tuple(attributes_to_update)
             try:
-                query = """UPDATE DOCTOR SET 
-                DoctorID = ?,
-                FirstName = ?,
-                MiddleInitial = ?,
-                LastName = ?,
-                PhoneNumber = ?,
-                Email = ?,
-                Title = ?
-                WHERE DoctorID = ?"""
-                result = executeQuery(conn, query, attributesToUpdate)
+                query = """UPDATE EXAMINATION SET 
+                ExamID = ?, 
+                Date = ?, 
+                Time = ?, 
+                Allergies = ?, 
+                Medications = ?, 
+                Height_in = ?, 
+                Weight_lbs = ?, 
+                Doctor = ?, 
+                Attendee = ? 
+                WHERE ExamID = ?"""
+                result = execute_query(conn, query, attributes_to_update)
                 # If the query fails it prints an error
                 if result == "Query Failed.":
-                    text = 'ERROR: Unable to update doctor: ' + doctorID
+                    result = 'ERROR: Unable to update examination: ' + examination_id
                 else:
-                    text = "Updated doctor: " + doctorID
+                    result = "Updated examination: " + examination_id
             # If the query fails it prints an error
             except:
-                text = 'ERROR: Unable to update doctor: ' + doctorID
-    return text
+                result = 'ERROR: Unable to update examination: ' + examination_id
+        return result
