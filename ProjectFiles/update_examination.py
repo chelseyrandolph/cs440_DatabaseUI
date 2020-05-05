@@ -64,6 +64,12 @@ def update_examination_entry(examination_id, date, time, allergies, medications,
                             attributes_to_update.append(examination[x])
                     except:
                         attributes_to_update.append(str(examination[x]))
+                elif examination[x] == list2[x] and list2[x] == '':
+                    try:
+                        if isinstance(int(examination[x]), int):
+                            attributes_to_update.append(examination[x])
+                    except:
+                        attributes_to_update.append(str(examination[x]))
             attributes_to_update.append(examination[0])
             attributes_to_update = tuple(attributes_to_update)
             try:

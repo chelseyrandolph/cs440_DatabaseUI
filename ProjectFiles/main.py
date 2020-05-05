@@ -320,7 +320,7 @@ def search_examination():
 @app.route("/filter-examination", methods=['GET', 'POST'])
 def filter_exam():
     if request.method == "POST":
-        list = ['doctor', 'attendee', 'date', 'time']
+        list = ['Doctor', 'Attendee', 'Date', 'Time']
         filter_list = []
         value_list = []
         for item in list:
