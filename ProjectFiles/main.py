@@ -32,9 +32,11 @@ from datetime import datetime
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
+
 @app.route("/")
 def start():
     return render_template("home.html")
+
 
 @app.route("/home")
 def home():
@@ -318,9 +320,9 @@ def search_examination():
 
 
 @app.route("/filter-examination", methods=['GET', 'POST'])
-def filter_exam():
+def filter_examination():
     if request.method == "POST":
-        list = ['Doctor', 'Attendee', 'Date', 'Time']
+        list = ['doctor_id', 'patient_id', 'date', 'time']
         filter_list = []
         value_list = []
         for item in list:
@@ -328,7 +330,13 @@ def filter_exam():
             if not r:
                 continue
             else:
-                filter_list.append(item)
+                if item == 'doctor_id':
+                    filter_list.append("Doctor")
+                elif item == 'patient_id':
+                    filter_list.append("Attendee")
+                else:
+                    filter_list.append(item)
+
                 if item == 'date':
                     value_list.append('\'' + datetime.strftime(datetime.strptime(r, '%m-%d-%Y'), '%m-%d-%Y') + '\'')
                 elif item == 'time':
@@ -377,7 +385,7 @@ def update_examination():
 
 
 @app.route("/delete-examination", methods=['GET', 'POST'])
-def delete_exam():
+def delete_examination():
     if request.method == "POST":
         examination_id = request.form["examination_id"]
         result = delete_examination_entry(examination_id)
@@ -461,6 +469,7 @@ def update_prescription():
                 return render_template("update-prescription.html", message=result)
     else:
         return render_template("update-prescription.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

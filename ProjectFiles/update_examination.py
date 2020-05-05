@@ -35,16 +35,11 @@ def update_examination_entry(examination_id, date, time, allergies, medications,
                 return result
     except:
         list2 = [examination_id, date, time, allergies, medications, height, weight, doctor_id, patient_id]
-        print(list2)
         if examination_id == '':
             result = 'ERROR: Examination ID is required.'
             return result
-        elif patient_id == '':
-            result = 'ERROR: Patient ID is required.'
-            return result
         else:
             row = get_examination(examination_id, patient_id)
-            print(row)
             if not row:
                 result = 'ERROR: Unable to update examination: ' + examination_id
                 return result

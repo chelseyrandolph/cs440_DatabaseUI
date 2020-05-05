@@ -27,7 +27,7 @@ def create_new_doctor(first_name, middle_initial, last_name, phone_number, email
                 if result == "Query Failed.":
                     text = 'ERROR: Unable to create doctor.'
                 else:
-                    text = "Added doctor to table: DOCTOR"
+                    text = "Added doctor to table: DOCTOR."
             # If the query fails it prints an error
             except:
                 text = 'ERROR: Unable to create doctor.'

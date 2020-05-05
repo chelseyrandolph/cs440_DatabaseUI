@@ -18,7 +18,6 @@ def delete_doctor_entry(doctor_id):
                 text = 'ERROR: Unable to find doctor: ' + doctor_id
             else:
                 text = "Deleted doctor: " + doctor_id
-                # TODO: DELETE PRESCRIPTION & EXAM WHERE ID WAS USED
         # If the query fails it prints an error
         except:
             text = 'ERROR: Unable to find doctor: ' + doctor_id
